@@ -80,10 +80,12 @@ while True:
     Connections+=1
     if Connections==NumeroConexiones:
         print('Se comienza a enviar el archivo')
+        Connections=0
         for i in range(NumeroConexiones):
             start_new_thread(threaded_client,(Clientes[i],))
             ThreadCount+=1
             print('Thread Number: '+str(ThreadCount))
+        Clientes=[]
 ServerSocket.close()
 
 

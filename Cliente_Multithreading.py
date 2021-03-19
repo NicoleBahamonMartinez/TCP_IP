@@ -36,7 +36,7 @@ with open('received_file', 'wb') as f:
     while True:
         print('receiving data...')
         data = ClientSocket.recv(1024)
-        print('data=%s', (data))
+        # print('data=%s', (data))
         if 'Thank you for connecting' in data.decode():
             hash_recibido=ClientSocket.recv(1024).decode()
         elif not data:

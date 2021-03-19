@@ -2,6 +2,7 @@ import socket
 import os
 import hashlib
 from _thread import *
+from threading import Timer
 
 
 
@@ -22,9 +23,9 @@ NumeroConexiones=input('A cuantos clientes quiere enviar el archivo ?')
 NumeroConexiones=int(NumeroConexiones)
 Archivo=input('Que archivo quiere mandar? (Opciones posibles 100-250)')
 if Archivo=='100':
-    Archivo='Archivos/Archivo100'
+    Archivo='Archivos/Archivo100.txt'
 elif Archivo=='250':
-    Archivo='Archivos/Archivo250'
+    Archivo='Archivos/Archivo250.txt'
 else:
     Archivo='Archivos/Archivo100'
     print('No se reconoce el archivo, se maneja el archivo de 100MB')
@@ -50,9 +51,11 @@ def hash_file(filename):
 
    # return the hex representation of digest
    return h.hexdigest()
+def enviar_hash(connection):
+    message = hash_file(Archivo)
+    print(message)
+    connection.send(str.encode(message))
 
-message = hash_file(Archivo)
-print(message)
 ##
 def threaded_client(connection):
     while True:
@@ -70,7 +73,12 @@ def threaded_client(connection):
 
         print('Done sending \n')
         connection.send(str.encode('Thank you for connecting'))
-        connection.send(str.encode(message))
+        try:
+            t = Timer(5, enviar_hash(connection))
+            t.start()
+        except Exception:
+            pass
+
         connection.close()
 
 while True:

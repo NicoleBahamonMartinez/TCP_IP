@@ -1,10 +1,12 @@
 import socket
 import hashlib
+import os
+import time
 
 ClientSocket=socket.socket()
 host='127.0.0.1'
 port=1233
-
+nombre_Archivo=''
 
 print('Waiting for connection')
 try:
@@ -13,25 +15,21 @@ except socket.error as e:
     print(str(e))
 ##
 
-# while True:
-#     estado='Listo para recibir'
-#     ClientSocket.send(str.encode(estado))
-#     with open('received_file_nuevo', 'wb') as f:
-#         print('file opened')
-#         while True:
-#             print('receiving data...')
-#             data = ClientSocket.recv(1024)
-#             print(data)
-#             print('data=%s', (data))
-#             if not data:
-#                 print('No hay data')
-#                 break
-#             f.write(data)
-#
-#     f.close()
-# ClientSocket.close()
+datos_iniciales = ClientSocket.recv(1024)
+datos_iniciales=datos_iniciales.decode()
+datos_iniciales=str(datos_iniciales)
+datos_iniciales=datos_iniciales.split('-')
 
-with open('received_file', 'wb') as f:
+time.sleep(1)
+if not os.path.exists('ArchivosRecibidos'):
+
+    os.makedirs('ArchivosRecibidos')
+nombre_Archivo='ArchivosRecibidos/Cliente'+str(datos_iniciales[0])+'-Prueba-'+str(datos_iniciales[1])+'.txt'
+
+print(nombre_Archivo)
+
+
+with open(nombre_Archivo, 'wb') as f:
     print('file opened')
     while True:
         print('receiving data...')
@@ -40,6 +38,7 @@ with open('received_file', 'wb') as f:
         if 'Thank you for connecting' in data.decode():
             hash_recibido=ClientSocket.recv(1024).decode()
         elif not data:
+            print('Closing file')
             break
         # write data to a file
         else:
@@ -70,8 +69,9 @@ def hash_file(filename):
 
    # return the hex representation of digest
    return h.hexdigest()
-
-message = hash_file('received_file')
+print('Comienza el hashing')
+message = hash_file(nombre_Archivo)
+print('Termina el hashing')
 if hash_recibido!=message:
     print('Error, el archivo no mantiene su integridad')
 else:

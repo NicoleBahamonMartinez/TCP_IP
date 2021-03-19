@@ -89,6 +89,8 @@ while True:
         print('Se comienza a enviar el archivo')
         Connections=0
         for i in range(NumeroConexiones):
+            Clientes[i].send(str.encode(str(i+1)+'-'+str(NumeroConexiones)))
+            print('Enviando número de thread y conexiones totales')
             start_new_thread(threaded_client,(Clientes[i],))
             ThreadCount+=1
             print('Thread Number: '+str(ThreadCount))

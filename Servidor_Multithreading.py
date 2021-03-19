@@ -2,7 +2,7 @@ import socket
 import os
 import hashlib
 from _thread import *
-from threading import Timer
+import time
 
 
 
@@ -73,11 +73,10 @@ def threaded_client(connection):
 
         print('Done sending \n')
         connection.send(str.encode('Thank you for connecting'))
-        try:
-            t = Timer(5, enviar_hash(connection))
-            t.start()
-        except Exception:
-            pass
+        time.sleep(5)
+        enviar_hash(connection)
+
+
 
         connection.close()
 

@@ -27,25 +27,27 @@ else:
     Archivo='Archivos/Archivo100'
     print('No se reconoce el archivo, se maneja el archivo de 100MB')
 ServerSocket.listen(5)
+print('Server listening....')
 
 ##
 def threaded_client(connection):
     connection.send(str.encode('Welcome to the Servern'))
     while True:
-        data = connection.recv(2048)
-        filename=Archivo #In the same folder or path is this file running must the file you want to tranfser to be
-        f = open(filename,'rb')
+        filename =Archivo  # In the same folder or path is this file running must the file you want to tranfser to be
+        f = open(filename, 'rb')
         l = f.read(1024)
         while (l):
-            connection.send(l)
-            print('Sent ',repr(l))
-            l = f.read(1024)
-            f.close()
+            try:
+                connection.send(l)
+                # print('Sent ', repr(l))
+                l = f.read(1024)
+            except Exception:
+                pass
+        f.close()
 
-        print('Done sending \n')
+        print('Done sending')
         connection.send(str.encode('Thank you for connecting'))
-
-    connection.close()
+        connection.close()
 
 while True:
     Client,address=ServerSocket.accept()

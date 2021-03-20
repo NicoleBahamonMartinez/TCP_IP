@@ -12,6 +12,7 @@ port=1233
 ThreadCount=0
 Connections=0
 Clientes=[]
+EstadoClientes='Listo para recibir'
 
 try:
     ServerSocket.bind((host,port))
@@ -83,18 +84,23 @@ def threaded_client(connection):
 while True:
     Client,address=ServerSocket.accept()
     print('Connected to: '+address[0]+':'+str(address[1]))
-    Clientes.append(Client)
-    Connections+=1
+    Booleano=EstadoClientes==(Client.recv(2048).decode('utf-8'))
+    if Booleano:
+        Connections+=1
+        Clientes.append(Client)
     if Connections==NumeroConexiones:
         print('Se comienza a enviar el archivo')
-        Connections=0
         for i in range(NumeroConexiones):
             Clientes[i].send(str.encode(str(i+1)+'-'+str(NumeroConexiones)))
             print('Enviando número de thread y conexiones totales')
+            time.sleep(1)
             start_new_thread(threaded_client,(Clientes[i],))
             ThreadCount+=1
             print('Thread Number: '+str(ThreadCount))
         Clientes=[]
+        ThreadCount=0
+        Connections=0
+
 ServerSocket.close()
 
 

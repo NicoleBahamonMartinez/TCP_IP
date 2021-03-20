@@ -14,13 +14,14 @@ try:
 except socket.error as e:
     print(str(e))
 ##
+Estado='Listo para recibir'
+ClientSocket.send(str.encode(Estado))
 
 datos_iniciales = ClientSocket.recv(1024)
 datos_iniciales=datos_iniciales.decode()
 datos_iniciales=str(datos_iniciales)
 datos_iniciales=datos_iniciales.split('-')
 
-time.sleep(1)
 if not os.path.exists('ArchivosRecibidos'):
 
     os.makedirs('ArchivosRecibidos')

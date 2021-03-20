@@ -14,8 +14,12 @@ try:
 except socket.error as e:
     print(str(e))
 ##
-Estado='Listo para recibir'
-ClientSocket.send(str.encode(Estado))
+if nombre_Archivo=='':
+    Estado='Listo para recibir'
+    ClientSocket.send(str.encode(Estado))
+else:
+    ClientSocket.send(str.encode('Recibiendo Archivo'))
+
 
 datos_iniciales = ClientSocket.recv(1024)
 datos_iniciales=datos_iniciales.decode()

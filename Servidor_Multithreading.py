@@ -88,6 +88,8 @@ while True:
     if Booleano:
         Connections+=1
         Clientes.append(Client)
+    else:
+        Client.close()
     if Connections==NumeroConexiones:
         print('Se comienza a enviar el archivo')
         for i in range(NumeroConexiones):

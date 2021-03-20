@@ -66,6 +66,7 @@ logging.info('Soy el cliente '+str(datos_iniciales[0]+' de '+str(datos_iniciales
 ## Escritura de paquetes recibidos hacia archivo
 with open(nombre_Archivo, 'wb') as f:
     print('file opened')
+    tiempo_Inicio = datetime.now()
     while True:
         print('receiving data...')
         data = ClientSocket.recv(1024)
@@ -75,6 +76,7 @@ with open(nombre_Archivo, 'wb') as f:
             print(hash_recibido)
             print('Recibe el hash')
             print('Closing file')
+            tiempo_Final = datetime.now()
             break
         # write data to a file
         else:
@@ -84,6 +86,8 @@ f.close()
 print('Successfully get the file')
 tamanio_Archivo=os.stat(nombre_Archivo).st_size
 logging.info('Tamaño de archivo recibido: '+str(tamanio_Archivo)+' bytes')
+tiempoTotal=(tiempo_Final-tiempo_Inicio).microseconds
+logging.info('Tiempo recepción de archivo  :' + str(tiempoTotal) + ' microsegundos')
 ## Hashing del archivo
 print('Comienza el hashing')
 message = hash_file(nombre_Archivo)

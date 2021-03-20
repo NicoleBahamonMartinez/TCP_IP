@@ -3,6 +3,12 @@ import os
 import hashlib
 from _thread import *
 import time
+import logging
+from datetime import datetime
+
+now=datetime.now()
+filename=str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'-'+str(now.hour)+'-'+str(now.minute)+'-'+str(now.second)+'-logServidor.txt'
+logging.basicConfig(filename=filename, level=logging.DEBUG)
 
 
 
@@ -22,15 +28,18 @@ except socket.error as e:
 print('Waiting for connection...')
 NumeroConexiones=input('A cuantos clientes quiere enviar el archivo ?')
 NumeroConexiones=int(NumeroConexiones)
-Archivo=input('Que archivo quiere mandar? (Opciones posibles 100-250)')
-if Archivo=='100':
+Archivo_Tamaño=input('Que archivo quiere mandar? (Opciones posibles 100-250)')
+if Archivo_Tamaño=='100':
     Archivo='Archivos/Archivo100.txt'
-elif Archivo=='250':
+elif Archivo_Tamaño=='250':
     Archivo='Archivos/Archivo250.txt'
 else:
     Archivo='Archivos/Archivo100'
+    Archivo_Tamaño=100
     print('No se reconoce el archivo, se maneja el archivo de 100MB')
 ServerSocket.listen(5)
+logging.debug('Nombre de archivo enviado'+Archivo)
+logging.debug('Tamaño de archivo enviado'+Archivo_Tamaño+'MB')
 print('Server listening....')
 ##
 def hash_file(filename):

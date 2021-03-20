@@ -2,6 +2,14 @@ import socket
 import hashlib
 import os
 import time
+import logging
+from datetime import datetime
+
+now=datetime.now()
+
+
+filename=str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'-'+str(now.hour)+'-'+str(now.minute)+'-'+str(now.second)+'-logCliente.txt'
+logging.basicConfig(filename=filename, level=logging.DEBUG)
 
 ClientSocket=socket.socket()
 host='127.0.0.1'

@@ -88,6 +88,11 @@ tamanio_Archivo=os.stat(nombre_Archivo).st_size
 logging.info('Tamaño de archivo recibido: '+str(tamanio_Archivo)+' bytes')
 tiempoTotal=(tiempo_Final-tiempo_Inicio).microseconds
 logging.info('Tiempo recepción de archivo  :' + str(tiempoTotal) + ' microsegundos')
+##
+NumPaquetesRecibidos=tamanio_Archivo/1024+3
+NumBytesRecibidos=tamanio_Archivo+(1024*3)
+logging.info('Numero Paquetes Recibidos: '+str(NumPaquetesRecibidos))
+logging.info('Numero Bytes Recibidos: '+str(NumBytesRecibidos))
 ## Hashing del archivo
 print('Comienza el hashing')
 message = hash_file(nombre_Archivo)

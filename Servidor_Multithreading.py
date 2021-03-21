@@ -48,6 +48,12 @@ ServerSocket.listen(5)
 logging.info('Nombre de archivo enviado: '+Archivo)
 logging.info('Tamaño de archivo enviado: '+Archivo_Tamaño+' MB')
 print('Server listening....')
+##
+NumPaquetesEnviados=((int(Archivo_Tamaño)*1000)+3)*NumeroConexiones
+NumBytesEnviados=NumPaquetesEnviados*1024
+logging.info('Numero Paquetes Enviados: '+str(NumPaquetesEnviados))
+logging.info('Numero Bytes Enviados: '+str(NumBytesEnviados))
+
 ## Función para hallar el hash al archivo
 def hash_file(filename):
    """"This function returns the SHA-1 hash

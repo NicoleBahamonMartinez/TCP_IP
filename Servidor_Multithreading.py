@@ -14,7 +14,7 @@ logging.basicConfig(filename=filename, level=logging.DEBUG)
 # Creación socket servidor
 ServerSocket=socket.socket()
 # Inicialización variables
-host='127.0.0.1'
+host='192.168.0.27'
 port=1233
 ThreadCount=0
 Connections=0

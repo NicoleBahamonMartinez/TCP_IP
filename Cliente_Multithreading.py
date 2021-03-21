@@ -11,7 +11,7 @@ filename=str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'-'+str(now.hour)+'-'
 logging.basicConfig(filename=filename, level=logging.DEBUG)
 
 ClientSocket=socket.socket()
-host='127.0.0.1'
+host='192.168.0.27'
 port=1233
 nombre_Archivo=''
 
